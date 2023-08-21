@@ -1,0 +1,25 @@
+<main>
+    <section>
+      <!-- pager -->
+      <ul *ngIf="pager.pages && pager.pages.length" class="pagination">
+            <li [ngClass]="pager.currentPage === 1 ? 'pagination__item pagination__item--disabled' : 'pagination__item'">
+                <a (click)="setPage.emit(1)">First</a>
+            </li>
+            <li [ngClass]="pager.currentPage === 1 ? 'pagination__item pagination__item--disabled' : 'pagination__item'">
+                <a (click)="setPage.emit(pager.currentPage - 1)">Previous</a>
+            </li>
+    
+            <!-- pages -->
+            <li *ngFor="let page of pager.pages" [ngClass]="pager.currentPage === page ? 'pagination__item pagination__item--active' : 'pagination__item'">
+                <a (click)="setPage.emit(page)">{{page}}</a>
+            </li>
+    
+            <li [ngClass]="pager.currentPage === pager.totalPages ? 'pagination__item pagination__item--disabled' : 'pagination__item'">
+                <a (click)="setPage.emit(pager.currentPage + 1)">Next</a>
+            </li>
+            <li [ngClass]="pager.currentPage === pager.totalPages ? 'pagination__item pagination__item--disabled' : 'pagination__item'">
+                <a (click)="setPage.emit(pager.totalPages)">Last</a>
+            </li>
+        </ul>
+    </section>
+</main>
