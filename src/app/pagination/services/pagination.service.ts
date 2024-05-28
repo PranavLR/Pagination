@@ -13,22 +13,12 @@ export class PaginationService {
     return this.http.get('assets/data.json')
   }
 
-  getPager (
-    totalItems: number, 
-    currentPage: number = 1, 
-    googlePager: boolean = false, 
-    pageSize: number = 10
-  ) {
+  getPager ( totalItems: number, currentPage: number = 1,  pageSize: number = 10 ) {
       let totalPages = Math.ceil(totalItems / pageSize);
       let startPage: number;
       let endPage: number;
       let pages: any[] = [];
 
-      // google-like paging
-      if (totalPages <= 5 || !googlePager) {
-          startPage = 1;
-          endPage = totalPages;
-      } else {
           if (currentPage <= 3) {
               startPage = 1;
               endPage = 5;
@@ -39,7 +29,6 @@ export class PaginationService {
               startPage = currentPage - 2;
               endPage = currentPage+2;
           }
-      }
 
       // set number of pages
       for (let i=1; i <= endPage; i++) {

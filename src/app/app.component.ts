@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { PaginationService } from './pagination/services/pagination.service';
 
 @Component({
@@ -12,10 +12,9 @@ export class AppComponent implements OnInit {
   pager: any = {};
   pagedItems!: any[];
   selectedItem: string = 'Item 1';
+  limit: number = 10
 
-  // pageData$ = this.pagerService.getData().pipe()
-
-  constructor(private pagerService: PaginationService) {}
+  pagerService = inject(PaginationService)
   
   ngOnInit(): void {
     this.pagerService.getData().subscribe((data: any) => {
@@ -26,14 +25,12 @@ export class AppComponent implements OnInit {
 
   setPage(page: number) {
     if (this.pager) {
-      if (page < 1 || page > this.pager.totalPages) {
-        return;
-      }
+      if (page < 1 || page > this.pager.totalPages) return
     }
 
-    this.pager = this.pagerService.getPager( this.allItems?.length, page, true, 10 );
+    this.pager = this.pagerService.getPager( this.allItems?.length, page, this.limit );
     this.pager.pages = this.pager.pages.slice(
-      (this.pager.pages as []).length - 5,
+      this.pager.pages.length - 5,
       this.pager.pages.length
     );
 
